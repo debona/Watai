@@ -10,9 +10,19 @@ DOC_DIR="$BASEDIR/doc"
 JSDOC_DIR="/usr/local/Cellar/jsdoc-toolkit/2.4.0/libexec/jsdoc-toolkit"	#TODO: make this more shareable
 DIST_DIR="$BASEDIR/dist"
 JSCOVERAGE="$BASEDIR/node_modules/visionmedia-jscoverage/jscoverage"
+LOG_DIR="$BASEDIR/log"
 
 MOCHA_CMD="$BIN_DIR/mocha"
 DIST_INCLUDE="package.json go src README.md" # list all files / folders to be included when `dist`ing, separated by spaces; this is a copy of npm’s "files", couldn't find an easy way to parse it
+
+
+seleniumserver() {
+	mkdir -p "$LOG_DIR"
+	
+	LOG_FILE="log/selenium-server.txt"
+	
+	java -jar /usr/local/Cellar/selenium-server-standalone/2.24.1/selenium-server-standalone-2.24.1.jar -Dwebdriver.chrome.binary=/Applications/Browsers/Google\ Chrome.app/Contents/MacOS/Google\ Chrome 2>> "$LOG_FILE" | tee "$LOG_FILE" | egrep --color '(http://.+$)|(Started org.openqa.jetty.jetty.Server)'
+}
 
 
 # Cross-platform Darwin open(1)
@@ -40,6 +50,8 @@ docToCodeRatio() {
 
 
 case "$1" in
+	server )
+		seleniumserver ;;
 	test )
 		shift
 		opts=""
