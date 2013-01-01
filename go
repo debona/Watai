@@ -4,14 +4,14 @@ BASEDIR="$(cd `dirname $0`; pwd)"
 BASEDIR=$BASEDIR/$(dirname $(readlink $0) 2> /dev/null)	# readlink for NPM global install alias; error redirection in case of direct invocation, in which case readlink returns nothing
 SRC_DIR="$BASEDIR/src"
 COVERAGE_DIR="$BASEDIR/coverage"
-BIN_DIR="$BASEDIR/node_modules/.bin/"
+BIN_DIR="$BASEDIR/node_modules/.bin"
 TEST_DIR="$BASEDIR/test"
 DOC_DIR="$BASEDIR/doc"
 JSDOC_DIR="/usr/local/Cellar/jsdoc-toolkit/2.4.0/libexec/jsdoc-toolkit"	#TODO: make this more shareable
 DIST_DIR="$BASEDIR/dist"
-JSCOVERAGE="$BASEDIR/node_modules/visionmedia-jscoverage/jscoverage"
 
-MOCHA_CMD="$BIN_DIR/mocha"
+MOCHA_CMD="$BIN_DIR/mocha"	# test runner
+ISTANBUL_CMD="$BIN_DIR/istanbul"	# coverage tool
 
 # Not all tests are run each time, as some are long and little prone to failure.
 DEFAULT_TEST_DIRS="test/model test/controller test/functional test/lib"
@@ -73,10 +73,10 @@ case "$1" in
 		$MOCHA_CMD --bail $opts $dirs ;;
 	coverage )	# based on http://tjholowaychuk.com/post/18175682663
 		rm -rf $COVERAGE_DIR
-		$JSCOVERAGE $SRC_DIR $COVERAGE_DIR
+		$ISTANBUL_CMD instrument $SRC_DIR --output $COVERAGE_DIR
 		export npm_config_coverage=true
-		$MOCHA_CMD $DEFAULT_TEST_DIRS $ADDITIONAL_DIRS --reporter html-cov > $DOC_DIR/coverage.html &&
-		open $DOC_DIR/coverage.html
+		$MOCHA_CMD $DEFAULT_TEST_DIRS $ADDITIONAL_DIRS	# TODO: output Istanbul's __coverage__ variable to a JSON file, and call `istanbul report` on it
+		# open $DOC_DIR/coverage.html
 		exit 0 ;;
 	doc )
 		docToCodeRatio

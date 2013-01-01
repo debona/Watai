@@ -59,7 +59,8 @@
     "should": "1.1",
     "mocha": "1.4",
     "visionmedia-jscoverage": "1.0",
-    "longjohn": "0.0.3"
+    "longjohn": "0.0.3",
+    "istanbul": "0.1"
   },
   "preferGlobal": true
 }
