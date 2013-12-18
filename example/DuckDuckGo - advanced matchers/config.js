@@ -1,6 +1,6 @@
 module.exports = {
 	baseURL: {
-		protocol:	'https',
+		protocol:	'http',
 		hostname:	'duckduckgo.com',
 		query:		{ kad:'en_GB' }	// passing the language code is used only because DuckDuckGo adjusts to your default language, which may make the test fail
 	},
