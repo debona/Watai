@@ -12,3 +12,4 @@ before_script:
   - git submodule sync
   - git submodule update --init --recursive
   - ./go dev
+  - mv test/config-travis.js test/config.js
