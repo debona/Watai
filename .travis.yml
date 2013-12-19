@@ -9,7 +9,5 @@ addons:
     access_key: 11c69253-485f-4dae-bcbb-169c01fc9b17
 
 before_script:
-  - git submodule sync
-  - git submodule update --init --recursive
   - ./go dev
   - mv test/config-travis.js test/config.js
