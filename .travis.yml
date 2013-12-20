@@ -3,14 +3,17 @@ node_js:
   - "0.11"
   - "0.10"
 
+env:
+  global:
+    secure: "Puz/FowvKkvm1erFWtEdqNUwLoqVhyloElcXAWQYxKLXCf6JXpqEIqMANDcXvlzKB9cIw1Y/tTMeEaOlKYD2XxLdWCwTNrbug6Cd+8EfUC1LM8Or29SrfssKNg4ipvCak1wm52DiD2Bx1PsrjJkEsQn9ak1dudPj1xLPRKXQVzg="
+    secure: "DCI5AwJqQxa+GqZaSGublRBYoX9Uz22KH19sDQeM5szOby8/NLV/ZjMHBGbM0lFvnf8WtsCok5gYPHqnBlgesvFaB3fkmeHG1Hw9ZGVuIpF3gSfMa5LYJBTJTPOw46FXCuqFI8H34dvbe8mZ8fTG0J7ZL4OitsEq0DxL8YUAn1M="
+
 addons:
-  sauce_connect:
-    username: debona
-    access_key: 11c69253-485f-4dae-bcbb-169c01fc9b17
+  sauce_connect: true
 
 before_script:
   - ./go dev
-  - mv example/config-travis.json example/config.json
+  - mv example/config-travis.js example/config.js
   - mv test/config-travis.js test/config.js
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
