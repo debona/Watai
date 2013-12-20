@@ -5,11 +5,9 @@ node_js:
 
 env:
   global:
-    secure: "Puz/FowvKkvm1erFWtEdqNUwLoqVhyloElcXAWQYxKLXCf6JXpqEIqMANDcXvlzKB9cIw1Y/tTMeEaOlKYD2XxLdWCwTNrbug6Cd+8EfUC1LM8Or29SrfssKNg4ipvCak1wm52DiD2Bx1PsrjJkEsQn9ak1dudPj1xLPRKXQVzg="
-    secure: "DCI5AwJqQxa+GqZaSGublRBYoX9Uz22KH19sDQeM5szOby8/NLV/ZjMHBGbM0lFvnf8WtsCok5gYPHqnBlgesvFaB3fkmeHG1Hw9ZGVuIpF3gSfMa5LYJBTJTPOw46FXCuqFI8H34dvbe8mZ8fTG0J7ZL4OitsEq0DxL8YUAn1M="
-
-addons:
-  sauce_connect: true
+    - secure: "Puz/FowvKkvm1erFWtEdqNUwLoqVhyloElcXAWQYxKLXCf6JXpqEIqMANDcXvlzKB9cIw1Y/tTMeEaOlKYD2XxLdWCwTNrbug6Cd+8EfUC1LM8Or29SrfssKNg4ipvCak1wm52DiD2Bx1PsrjJkEsQn9ak1dudPj1xLPRKXQVzg="
+    - secure: "DCI5AwJqQxa+GqZaSGublRBYoX9Uz22KH19sDQeM5szOby8/NLV/ZjMHBGbM0lFvnf8WtsCok5gYPHqnBlgesvFaB3fkmeHG1Hw9ZGVuIpF3gSfMa5LYJBTJTPOw46FXCuqFI8H34dvbe8mZ8fTG0J7ZL4OitsEq0DxL8YUAn1M="
+    - SAUCE_LOGFILE=/tmp/sauce.log
 
 before_script:
   - ./go dev
@@ -18,6 +16,7 @@ before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   - sleep 5
+  - curl https://gist.github.com/debona/8056809/raw/sauce_connect_setup.sh | bash
   - curl "https://selenium.googlecode.com/files/selenium-server-standalone-2.38.0.jar" > /tmp/selenium.jar
   - java -jar /tmp/selenium.jar -host 127.0.0.1 &> /tmp/selenium.log &
   - sleep 20
@@ -30,3 +29,4 @@ script:
 
 after_failure:
   - cat /tmp/selenium.log
+  - cat /tmp/sauce.log
