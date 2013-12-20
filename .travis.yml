@@ -12,3 +12,6 @@ before_script:
   - java -jar /tmp/selenium.jar -host 127.0.0.1 &> /tmp/selenium.log &
   - sleep 20
   - cat /tmp/selenium.log
+
+after_failure:
+  - cat /tmp/selenium.log
