@@ -5,13 +5,13 @@ node_js:
 
 before_script:
   - ./go dev
+  - mv test/config-travis.js test/config.js
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   - sleep 5
   - curl "https://selenium.googlecode.com/files/selenium-server-standalone-2.38.0.jar" > /tmp/selenium.jar
   - java -jar /tmp/selenium.jar -host 127.0.0.1 &> /tmp/selenium.log &
   - sleep 20
-  - cat /tmp/selenium.log
 
 after_failure:
   - cat /tmp/selenium.log
