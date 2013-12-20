@@ -3,8 +3,14 @@ node_js:
   - "0.11"
   - "0.10"
 
+addons:
+  sauce_connect:
+    username: debona
+    access_key: 11c69253-485f-4dae-bcbb-169c01fc9b17
+
 before_script:
   - ./go dev
+  - mv example/config-travis.json example/config.json
   - mv test/config-travis.js test/config.js
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
@@ -12,6 +18,12 @@ before_script:
   - curl "https://selenium.googlecode.com/files/selenium-server-standalone-2.38.0.jar" > /tmp/selenium.jar
   - java -jar /tmp/selenium.jar -host 127.0.0.1 &> /tmp/selenium.log &
   - sleep 20
+
+script:
+  - npm run test-examples
+  - npm test
+  - npm run test-integration
+  - npm run test-security
 
 after_failure:
   - cat /tmp/selenium.log
